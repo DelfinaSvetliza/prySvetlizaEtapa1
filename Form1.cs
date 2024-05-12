@@ -15,10 +15,10 @@ namespace prySvetlizaEtapa1
 {
     public partial class Form1 : Form
     {
-        private Point previousPoint;
-        private bool isMouseDrawing = false;
-        private Bitmap signatureBitmap;
-        private string fondo;
+        private Point previousPoint; //almacena coordenas del punto anterior del dibujo
+        private bool isMouseDrawing = false; //detecta si se esta dibujando o no
+        private Bitmap signatureBitmap; //para tener la imagen que se esta dibujando
+        
         public Form1()
         {
             InitializeComponent();
@@ -30,9 +30,9 @@ namespace prySvetlizaEtapa1
         }
         private void InitializeSignaturePictureBox()
         {
-            signatureBitmap = new Bitmap(pctFirma.Width, pctFirma.Height);
+            signatureBitmap = new Bitmap(pctFirma.Width, pctFirma.Height); //donde se va a dibujar
             pctFirma.Image = signatureBitmap;
-            Graphics g = Graphics.FromImage(pctFirma.Image);
+            Graphics g = Graphics.FromImage(pctFirma.Image);//obtener un objeto que se utiliza para dibujar
             g.Clear(Color.White);
             g.Dispose();
         }
@@ -50,16 +50,18 @@ namespace prySvetlizaEtapa1
         {
             if (isMouseDrawing)
             {
+                //crea un objeto a partir de la imagen de pctbox
                 using (Graphics g = Graphics.FromImage(pctFirma.Image))
                 {
-                    g.SmoothingMode = SmoothingMode.AntiAlias;
-                    using (Pen pen = new Pen(Color.Black, 2))
+                    
+                    g.SmoothingMode = SmoothingMode.AntiAlias;//apariencia del lapiz
+                    using (Pen pen = new Pen(Color.Black, 2))//color y grueso del lapiz
                     {
                         g.DrawLine(pen, previousPoint, e.Location);
                     }
                 }
-                previousPoint = e.Location;
-                pctFirma.Invalidate();
+                previousPoint = e.Location;//que el punto inicial sea la ubicacion de e
+                pctFirma.Invalidate();//para que se muestre la linea que se dibujo
             }
         }
 
@@ -70,8 +72,49 @@ namespace prySvetlizaEtapa1
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            
+            // Obtener la fecha actual
+            string fecha = DateTime.Now.ToString("yyyy_MM_dd_HHmmss") + ".png";
+
+            // Construir la ruta del archivo
+            string carpeta = "../../Resources/FIRMA";
+            string nombreArchivo = $"dibujo_{fecha}";
+            string rutaCompleta = Path.Combine(carpeta, nombreArchivo);
+
+            try
+            {
+                // Crear la carpeta si no existe
+                Directory.CreateDirectory(carpeta);
+
+                // Crear un bitmap del mismo tamaño que el PictureBox
+                Bitmap bmp = new Bitmap(pctFirma.Width, pctFirma.Height);
+
+                // Dibujar el contenido del PictureBox en el bitmap
+                pctFirma.DrawToBitmap(bmp, pctFirma.ClientRectangle);
+
+                // Guardar el bitmap en un archivo
+                bmp.Save(rutaCompleta);
+
+                // Liberar recursos
+                bmp.Dispose();
+
+                MessageBox.Show("Firma guardada correctamente en " + rutaCompleta);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al guardar la firma: " + ex.Message);
+            }
 
         }
+
+        private void btnOtraFirma_Click(object sender, EventArgs e)
+        {
+            // Limpiar el PictureBox para permitir una nueva firma
+            pctFirma.Image = new Bitmap(pctFirma.Width, pctFirma.Height);
+            Graphics g = Graphics.FromImage(pctFirma.Image);//obtener un objeto que se utiliza para dibujar
+            g.Clear(Color.White);
+            g.Dispose();
+            pctFirma.Invalidate();
+        }
     }
+    
 }

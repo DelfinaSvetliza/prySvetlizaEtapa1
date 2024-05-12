@@ -30,12 +30,13 @@
         {
             this.btnGuardar = new System.Windows.Forms.Button();
             this.pctFirma = new System.Windows.Forms.PictureBox();
+            this.btnOtraFirma = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pctFirma)).BeginInit();
             this.SuspendLayout();
             // 
             // btnGuardar
             // 
-            this.btnGuardar.Location = new System.Drawing.Point(131, 380);
+            this.btnGuardar.Location = new System.Drawing.Point(131, 359);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(190, 58);
             this.btnGuardar.TabIndex = 0;
@@ -54,11 +55,22 @@
             this.pctFirma.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pctFirma_MouseMove);
             this.pctFirma.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pctFirma_MouseUp);
             // 
+            // btnOtraFirma
+            // 
+            this.btnOtraFirma.Location = new System.Drawing.Point(131, 443);
+            this.btnOtraFirma.Name = "btnOtraFirma";
+            this.btnOtraFirma.Size = new System.Drawing.Size(190, 54);
+            this.btnOtraFirma.TabIndex = 2;
+            this.btnOtraFirma.Text = "Hacer otra firma";
+            this.btnOtraFirma.UseVisualStyleBackColor = true;
+            this.btnOtraFirma.Click += new System.EventHandler(this.btnOtraFirma_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(446, 509);
+            this.Controls.Add(this.btnOtraFirma);
             this.Controls.Add(this.pctFirma);
             this.Controls.Add(this.btnGuardar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -74,6 +86,7 @@
 
         private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.PictureBox pctFirma;
+        private System.Windows.Forms.Button btnOtraFirma;
     }
 }
 
